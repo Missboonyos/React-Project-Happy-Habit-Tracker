@@ -1,0 +1,44 @@
+{
+    
+"habits" : [
+    {
+        "id": "1",
+        "name": "Morning workout",
+        "completed": true,
+        "completedDates":[]
+    },
+    {
+        "id": "2",
+        "name": "Read 30 mins",
+        "completed": false,
+        "completedDates":[]
+    },
+    
+    {
+        "id": "3",
+        "name": "Drink 2L water",
+        "completed": false,
+        "completedDates":[]
+    },
+    {
+        "id": "4",
+        "name": "Meal prep",
+        "completed": false,
+        "completedDates":[]
+    },
+    {
+        "id": "5",
+        "name": "Work",
+        "completed": false,
+        "completedDates":[]
+    },
+    {
+        "id": "6",
+        "name": "Learn",
+        "completed": false,
+        "completedDates":[]
+    }
+    
+]
+
+}
