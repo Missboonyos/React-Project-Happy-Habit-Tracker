@@ -1,8 +1,6 @@
 //rafce
 import React, { useState } from 'react'
 import AddHabit from './components/habits/AddHabit'
-import DeleteHabit from './components/habits/DeleteHabit'
-
 import HabitList from './components/habits/HabitList'
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
@@ -17,39 +15,50 @@ const App = () => {
     { id: 5, name: "Work", completed: false, completedDate: []},
     { id: 6, name: "Learn", completed: false, completedDate: []}
   ])
+  // console.log(habits)
 
-  // Toggle habit completion
+  // Add Toggle Function
+  // Function to toggle habit completion
   const toggleHabit = (id) => {
-    setHabits(habits.map(habit =>
-      habit.id === id ? { ...habit, completed: !habit.completed } : habit
-    ))
+    setHabits(habits.map(habit => 
+      habit.id === id
+        ? {...habit, completed: !habit.completed} // flip true / false
+        : habit // leave other habits unchanged
+      ))
   }
 
-  // Delete habit
+  // Function to add habit
+  const addHabit = (name) => {
+    const newHabit = {
+      id: Date.now(), // Simple way to generate unique ID
+      name: name,
+      completed: false,
+      completedDate: []
+    }
+    setHabits([...habits, newHabit]) // Add to end of array
+  }
+
+  // Function to delete habit
   const deleteHabit = (id) => {
     setHabits(habits.filter(habit => habit.id !== id))
+    // Keep all habits EXCEPT the one with this id
   }
-
+  
   return (
     <>
-      <h1>Happy Habit Tracker!</h1>
-      <hr />
-      <Header />
-      <br />
-      {/* Pass habits and functions to HabitList */}
+      {/* <h1>Happy Habit Tracker!</h1>      */}
+      <Header />  
+      {/* Pass habits data to HabitList */} 
+      {/* Pass the toggle function down  */}
       <HabitList 
         habits={habits} 
-        onToggle={toggleHabit}
-        onDelete={deleteHabit}
-      />
-      <AddHabit />
-      <DeleteHabit />
-      
-     
-      <br />
+        onToggle={toggleHabit} 
+        onDelete={deleteHabit} // Pass delete function
+      />  
+      <AddHabit onAdd={addHabit}/> {/*Pass the function  */}
       <StreakCount />
-      <br />
       <Footer />
+
     </>
   )
 }
