@@ -1,5 +1,5 @@
 //rafce
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddHabit from './components/habits/AddHabit'
 import HabitList from './components/habits/HabitList'
 import Footer from './components/layout/Footer'
@@ -7,15 +7,37 @@ import Header from './components/layout/Header'
 import StreakCount from './components/streak/StreakCount'
 
 const App = () => {
-  const [habits, setHabits] = useState([
-    { id: 1, name: "Morning workout", completed: false, completedDate: []},
-    { id: 2, name: "Read 30 mins", completed: false, completedDate: []},
-    { id: 3, name: "Drink 2L water", completed: false, completedDate: []},
-    { id: 4, name: "Meal prep", completed: false, completedDate: []},
-    { id: 5, name: "Work", completed: false, completedDate: []},
-    { id: 6, name: "Learn", completed: false, completedDate: []}
-  ])
+
+  // beginning step
+  // const [habits, setHabits] = useState([
+  //   { id: 1, name: "Morning workout", completed: false, completedDate: []},
+  //   { id: 2, name: "Read 30 mins", completed: false, completedDate: []},
+  //   { id: 3, name: "Drink 2L water", completed: false, completedDate: []},
+  //   { id: 4, name: "Meal prep", completed: false, completedDate: []},
+  //   { id: 5, name: "Work", completed: false, completedDate: []},
+  //   { id: 6, name: "Learn", completed: false, completedDate: []}
+  // ])
   // console.log(habits)
+
+
+    // Load habits from localStorage on start
+    const [habits, setHabits] = useState(()=> {
+      const saved = localStorage.getItem('habits')
+      return saved ? JSON.parse(saved): [
+        // Default habits if nothing saved
+        { id: 1, name: "Morning workout", completed: false, completedDate: []},
+        { id: 2, name: "Read 30 mins", completed: false, completedDate: []},
+        { id: 3, name: "Drink 2L water", completed: false, completedDate: []},
+        { id: 4, name: "Meal prep", completed: false, completedDate: []},
+        { id: 5, name: "Work", completed: false, completedDate: []},
+        { id: 6, name: "Learn", completed: false, completedDate: []}
+  ] 
+    })
+    
+    // Save to localStorage whenever habits change
+    useEffect(() => {
+      localStorage.setItem('habits', JSON.stringify(habits))
+    }, [habits])
 
   // Add Toggle Function
   // Function to toggle habit completion
@@ -56,7 +78,7 @@ const App = () => {
         onDelete={deleteHabit} // Pass delete function
       />  
       <AddHabit onAdd={addHabit}/> {/*Pass the function  */}
-      <StreakCount />
+      <StreakCount habits={habits} /> 
       <Footer />
 
     </>
